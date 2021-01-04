@@ -4,6 +4,8 @@
 
 */
 
+// Added Git stuff
+
 #include <Arduino_LSM9DS1.h>
 
 float x, y, z;
