@@ -1,0 +1,33 @@
+import serial
+import time
+import bpy
+
+ser = serial.Serial('COM5', '115200')
+
+time.sleep(2)
+
+#elbow = bpy.context.selected_objects[0]
+elbow = bpy.data.objects['Armature']
+
+elbow.rotation_mode = 'QUATERNION'
+
+for x in range(300):
+    
+    string = ser.readline()
+    list = string.split( )
+    if len(list) == 4:
+        w = float(list[0])
+        x = float(list[1])
+        y = float(list[2])
+        z = float(list[3])
+        
+        elbow.rotation_quaternion.w = w
+        elbow.rotation_quaternion.x = x
+        elbow.rotation_quaternion.y = y
+        elbow.rotation_quaternion.z = z
+        
+        print(str(w) + ' ' + str(x) + ' ' + str(y) + ' ' + str(z))
+        
+        bpy.ops.wm.redraw_timer(type = 'DRAW_WIN_SWAP', iterations = 1)
+
+ser.close()
